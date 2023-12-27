@@ -2,7 +2,9 @@ package com.tiago.testdev.controller;
 
 import com.tiago.testdev.models.ShortenUrl;
 import com.tiago.testdev.models.ShortenUrlDto;
+import com.tiago.testdev.models.ShortenUrlErrorDetails;
 import com.tiago.testdev.models.Statistics;
+import com.tiago.testdev.models.enums.Error;
 import com.tiago.testdev.models.interfaces.ShortenUrlRepository;
 import com.tiago.testdev.models.interfaces.StatisticsRepository;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +33,10 @@ public class ShortenUrlController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ShortenUrl> shorten(@RequestParam String url) {
+    public ResponseEntity shorten(@RequestParam String url, @RequestParam(required = false) String customAlias) {
         Instant start = Instant.now();
         String[] uuid = UUID.nameUUIDFromBytes(url.getBytes()).toString().split("-");
-        String hash = Arrays.stream(uuid).reduce((s, s2) -> s2).orElse(null);
+        String alias;
 
         try {
             Thread.sleep(10);
@@ -42,11 +44,25 @@ public class ShortenUrlController {
             throw new RuntimeException(e);
         }
 
+        if (customAlias != null) {
+            alias = customAlias;
+        } else {
+            alias = Arrays.stream(uuid).reduce((s, s2) -> s2).orElse(null);
+        }
+
+        if (shortenUrlRepository.existsByAlias(alias)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ShortenUrlErrorDetails(alias,
+                            Error.E001.name().replace("E", ""),
+                            Error.E001.getValue()));
+        }
+
         Instant end = Instant.now();
         Duration elapsedTime = Duration.between(start, end);
-        Statistics statistics = new Statistics(null, elapsedTime.toMillis()+"ms");
+        Statistics statistics = new Statistics(null, elapsedTime.toMillis() + "ms");
         statisticsRepository.save(statistics);
-        ShortenUrlDto shortenUrlDto = new ShortenUrlDto(null, hash, url, statistics);
+        ShortenUrlDto shortenUrlDto = new ShortenUrlDto(null, alias, url, statistics);
         ShortenUrl shortenUrl = new ShortenUrl(shortenUrlDto);
         shortenUrlRepository.save(shortenUrl);
 

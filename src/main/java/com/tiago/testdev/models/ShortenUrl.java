@@ -23,7 +23,7 @@ public class ShortenUrl {
 
     public ShortenUrl(ShortenUrlDto shortenUrl) {
         this.alias = shortenUrl.alias();
-        this.url = shortenUrl.url();
+        this.url = "http://shortener/u/" + this.alias;
         this.statistics = shortenUrl.statistics();
     }
 }

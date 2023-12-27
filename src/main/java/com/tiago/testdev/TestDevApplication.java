@@ -20,36 +20,5 @@ public class TestDevApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        long startTime = System.currentTimeMillis();
-//
-//        // Seu código aqui (por exemplo, gerar a URL encurtada)
-//
-//        // Obter o tempo final
-//        long endTime = System.currentTimeMillis();
-//
-//        // Calcular a diferença
-//        long elapsedTime = endTime - startTime;
-//
-//        // Imprimir o tempo decorrido em milissegundos
-//        System.out.println("Tempo decorrido: " + elapsedTime + " ms");
-
-        Instant startInstant = Instant.now();
-
-        // Seu código aqui (por exemplo, gerar a URL encurtada)
-        for (int i = 0; i < 100000000; i++) {
-            i++;
-        }
-
-        // Obter o tempo final
-        Instant endInstant = Instant.now();
-
-        // Calcular a diferença
-        Duration elapsedTime = Duration.between(startInstant, endInstant);
-
-        // Imprimir o tempo decorrido em milissegundos
-        System.out.println("Tempo decorrido: " + elapsedTime.toMillis() + " ms");
-//        Instant end = Instant.now();
-//        Duration between = Duration.between(start, end);
-//        System.out.println(between.toMillis());
     }
 }
