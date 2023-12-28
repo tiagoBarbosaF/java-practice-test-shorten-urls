@@ -17,4 +17,12 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String timeTaken;
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "id=" + id +
+                ", timeTaken='" + timeTaken + '\'' +
+                '}';
+    }
 }

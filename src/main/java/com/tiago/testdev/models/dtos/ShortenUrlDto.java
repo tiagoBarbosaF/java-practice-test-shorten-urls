@@ -1,4 +1,6 @@
-package com.tiago.testdev.models;
+package com.tiago.testdev.models.dtos;
+
+import com.tiago.testdev.models.Statistics;
 
 public record ShortenUrlDto(
         Long id,

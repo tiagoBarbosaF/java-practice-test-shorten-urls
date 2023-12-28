@@ -1,7 +1,11 @@
 package com.tiago.testdev.models.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Error {
-    E001("CUSTOM ALIAS ALREADY EXISTS");
+    E001("CUSTOM ALIAS ALREADY EXISTS"),
+    E002("SHORTENED URL NOT FOUND");
 
     private final String value;
 
@@ -9,7 +13,4 @@ public enum Error {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

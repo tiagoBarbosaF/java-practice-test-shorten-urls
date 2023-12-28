@@ -1,5 +1,6 @@
 package com.tiago.testdev.models;
 
+import com.tiago.testdev.models.dtos.ShortenUrlDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,13 +18,15 @@ public class ShortenUrl {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String alias;
-    private String url;
+    private String urlOriginal;
+    private String shortenedUrl;
     @OneToOne
     private Statistics statistics;
 
     public ShortenUrl(ShortenUrlDto shortenUrl) {
         this.alias = shortenUrl.alias();
-        this.url = "http://shortener/u/" + this.alias;
+        this.urlOriginal = shortenUrl.url();
+        this.shortenedUrl = "http://shortener/u/" + this.alias;
         this.statistics = shortenUrl.statistics();
     }
 }

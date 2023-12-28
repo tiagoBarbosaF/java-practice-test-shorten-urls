@@ -1,18 +1,16 @@
 package com.tiago.testdev.controller;
 
 import com.tiago.testdev.models.ShortenUrl;
-import com.tiago.testdev.models.ShortenUrlDto;
-import com.tiago.testdev.models.ShortenUrlErrorDetails;
+import com.tiago.testdev.models.dtos.ShortenUrlDto;
+import com.tiago.testdev.models.dtos.ShortenUrlErrorDetails;
 import com.tiago.testdev.models.Statistics;
 import com.tiago.testdev.models.enums.Error;
 import com.tiago.testdev.models.interfaces.ShortenUrlRepository;
 import com.tiago.testdev.models.interfaces.StatisticsRepository;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -33,16 +31,11 @@ public class ShortenUrlController {
 
     @PostMapping
     @Transactional
+    @Timed(description = "testTimer")
     public ResponseEntity shorten(@RequestParam String url, @RequestParam(required = false) String customAlias) {
         Instant start = Instant.now();
         String[] uuid = UUID.nameUUIDFromBytes(url.getBytes()).toString().split("-");
         String alias;
-
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         if (customAlias != null) {
             alias = customAlias;

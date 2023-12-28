@@ -1,4 +1,4 @@
-package com.tiago.testdev.models;
+package com.tiago.testdev.models.dtos;
 
 public record ShortenUrlErrorDetails(
         String alias,
