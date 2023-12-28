@@ -55,10 +55,10 @@ public class DataInitializer implements CommandLineRunner {
                                     .toString()
                                     .split("-"))
                             .reduce((s, s2) -> s2)
-                            .orElse(null), "https://github.com/", statisticsRepository.findAll().get(3));
+                            .orElse(null), "https://github.com", statisticsRepository.findAll().get(3));
             ShortenUrlDto shortenUrlDto5 = new ShortenUrlDto(null, "myGitHub", "https://github.com", statisticsRepository.findAll().get(4));
             ShortenUrlDto shortenUrlDto6 = new ShortenUrlDto(null,
-                    Arrays.stream(UUID.nameUUIDFromBytes("https://www.instagram.com/".getBytes())
+                    Arrays.stream(UUID.nameUUIDFromBytes("https://www.instagram.com".getBytes())
                                     .toString()
                                     .split("-"))
                             .reduce((s, s2) -> s2)
