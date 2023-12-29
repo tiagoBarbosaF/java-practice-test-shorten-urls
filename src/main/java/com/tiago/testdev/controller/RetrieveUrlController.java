@@ -32,7 +32,7 @@ public class RetrieveUrlController {
         ResponseEntity<ShortenUrlErrorDetails> checkUrl = retrieveUrlService.getRetrieveErrorDetails(list);
         if (checkUrl != null) return checkUrl;
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/mostUsedUrls")

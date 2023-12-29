@@ -1,5 +1,6 @@
 package com.tiago.testdev.utils;
 
+import com.tiago.testdev.client.ShortenUrlClientApi;
 import com.tiago.testdev.models.ShortenUrl;
 import com.tiago.testdev.models.Statistics;
 import com.tiago.testdev.models.dtos.ShortenUrlDto;
@@ -31,8 +32,6 @@ public class DataInitializer implements CommandLineRunner {
         for (Long i = 0L; i < 11; i++) {
             statistics.add(new Statistics(i, "12ms"));
         }
-
-
 
         statisticsRepository.saveAll(statistics);
 
@@ -92,5 +91,14 @@ public class DataInitializer implements CommandLineRunner {
             );
             shortenUrlRepository.saveAll(list);
         }
+
+        String originalUrl = "http://www.example.com";
+        String retrieveUrl = "https://github.com";
+        String customAlias = "example";
+
+        String shortUrl = ShortenUrlClientApi.shortenUrl(originalUrl, customAlias);
+        String retrieve = ShortenUrlClientApi.retrieveUrl(retrieveUrl);
+        System.out.println("Shortened URL: " + shortUrl);
+        System.out.println("Retrieve URL: " + retrieve);
     }
 }

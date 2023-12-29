@@ -5,7 +5,8 @@ import com.tiago.testdev.models.dtos.ShortenUrlErrorDetails;
 import com.tiago.testdev.models.enums.Error;
 import com.tiago.testdev.models.interfaces.ShortenUrlRepository;
 import com.tiago.testdev.services.ShortenUrlService;
-import io.micrometer.core.annotation.Timed;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,6 @@ import java.time.Instant;
 @RestController
 @RequestMapping("/shorten/create")
 public class ShortenUrlController {
-
     private final ShortenUrlService shortenUrlService;
     private final ShortenUrlRepository shortenUrlRepository;
 
@@ -32,8 +32,7 @@ public class ShortenUrlController {
 
     @PostMapping
     @Transactional
-    @Timed(description = "testTimer")
-    public ResponseEntity shorten(@RequestParam String url, @RequestParam(required = false) String customAlias) {
+    public ResponseEntity shorten(@RequestParam @Valid @NotEmpty String url, @RequestParam(required = false) String customAlias) {
         Instant start = Instant.now();
         String alias;
 
