@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -26,6 +26,11 @@ public class ShortenUrlService {
     }
 
     public String createHashAlias(String url) {
+        String pattern = "^(https?|ftp)://[^\\s/$.?#].\\S*$";
+        if (url.isEmpty() || !Pattern.matches(pattern, url)) {
+            return null;
+        }
+
         String[] uuid = UUID.nameUUIDFromBytes(url.getBytes()).toString().split("-");
         log.info("Alias created: {} for URL: {}. ", uuid, url);
         return Arrays.stream(uuid).reduce((s, s2) -> s2).orElse(null);

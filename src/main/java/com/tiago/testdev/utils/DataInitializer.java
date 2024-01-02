@@ -8,6 +8,7 @@ import com.tiago.testdev.models.interfaces.ShortenUrlRepository;
 import com.tiago.testdev.models.interfaces.StatisticsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,9 +97,10 @@ public class DataInitializer implements CommandLineRunner {
         String retrieveUrl = "https://github.com";
         String customAlias = "example";
 
-        String shortUrl = ShortenUrlClientApi.shortenUrl(originalUrl, customAlias);
-        String retrieve = ShortenUrlClientApi.retrieveUrl(retrieveUrl);
-        System.out.println("Shortened URL: " + shortUrl);
-        System.out.println("Retrieve URL: " + retrieve);
+        Mono<String> shortenUrl = ShortenUrlClientApi.shortenUrl(originalUrl, customAlias);
+        Mono<String> retrievedUrl = ShortenUrlClientApi.retrieveUrl(retrieveUrl);
+
+        shortenUrl.subscribe(item-> System.out.println("Shortened Url: " + item));
+        retrievedUrl.subscribe(item-> System.out.println("Retrieve Url: " + item));
     }
 }
