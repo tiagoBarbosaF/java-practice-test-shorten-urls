@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class RetrieveUrlServiceTest {
@@ -45,6 +44,6 @@ class RetrieveUrlServiceTest {
     @DisplayName("Test - return true if list is not empty")
     public void testGetUrlsMostAccessed() {
         List<RetrieveUrlsMostAccessed> urlsMostAccessed = retrieveUrlService.getUrlsMostAccessed();
-        assertEquals(true,!urlsMostAccessed.isEmpty());
+        assertTrue(!urlsMostAccessed.isEmpty());
     }
 }

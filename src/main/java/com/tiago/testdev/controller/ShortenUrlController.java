@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @RestController
@@ -37,7 +38,7 @@ public class ShortenUrlController {
     @Timed(value = "endpoint_duration")
     @PostMapping
     @Transactional
-    public ResponseEntity shorten(@RequestParam @Valid @NotEmpty String url, @RequestParam(required = false) String customAlias) {
+    public ResponseEntity shorten(@RequestParam @Valid @NotEmpty String url, @RequestParam(required = false) String customAlias, UriComponentsBuilder uriBuilder) {
         log.info("Starting endpoint /shorten/create for the URL: {}. Custom alias: {}", url, customAlias);
         Timer.Sample start = Timer.start(meterRegistry);
         String alias;
@@ -57,7 +58,11 @@ public class ShortenUrlController {
         long endToMilli = end / 1_000_000;
         ShortenUrl shortenUrl = shortenUrlService.getShortenUrl(url, endToMilli, alias);
 
+
+        var uri = uriBuilder.path("/shorten/create/{id}").buildAndExpand(shortenUrl.getId()).toUri();
+
         log.info("Endpoint /shorten/create finished. Total time: {} ms.", endToMilli);
-        return ResponseEntity.ok().body(shortenUrl);
+//        return ResponseEntity.ok().body(shortenUrl);
+        return ResponseEntity.created(uri).body(shortenUrl);
     }
 }
