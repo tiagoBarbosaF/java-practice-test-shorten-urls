@@ -1,14 +1,12 @@
 package com.tiago.testdev.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name = "statistics")
 @Entity(name = "Statistics")
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -17,12 +15,4 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String timeTaken;
-
-    @Override
-    public String toString() {
-        return "Statistics{" +
-                "id=" + id +
-                ", timeTaken='" + timeTaken + '\'' +
-                '}';
-    }
 }

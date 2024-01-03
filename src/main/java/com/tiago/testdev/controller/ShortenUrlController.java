@@ -58,11 +58,9 @@ public class ShortenUrlController {
         long endToMilli = end / 1_000_000;
         ShortenUrl shortenUrl = shortenUrlService.getShortenUrl(url, endToMilli, alias);
 
-
         var uri = uriBuilder.path("/shorten/create/{id}").buildAndExpand(shortenUrl.getId()).toUri();
 
         log.info("Endpoint /shorten/create finished. Total time: {} ms.", endToMilli);
-//        return ResponseEntity.ok().body(shortenUrl);
         return ResponseEntity.created(uri).body(shortenUrl);
     }
 }

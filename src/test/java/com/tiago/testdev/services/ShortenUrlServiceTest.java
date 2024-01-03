@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ShortenUrlServiceTest {
@@ -18,7 +17,7 @@ class ShortenUrlServiceTest {
     @DisplayName("Test - return null if url is empty or wrong format")
     public void testCreateHashAliasEmptyOrWrongFormat() {
         String alias = shortenUrlService.createHashAlias("httpss://any.com");
-        assertEquals(null, alias);
+        assertNull(alias);
     }
 
     @Test

@@ -10,10 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -26,12 +23,14 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         List<Statistics> statistics = new ArrayList<>();
+        Random random = new Random();
 
-        for (Long i = 0L; i < 11; i++) {
-            statistics.add(new Statistics(i, "12ms"));
+        for (long i = 0L; i < 11; i++) {
+            int randomInt = random.nextInt(100) + 1;
+            statistics.add(new Statistics(i, randomInt + "ms"));
         }
 
         statisticsRepository.saveAll(statistics);
@@ -42,7 +41,7 @@ public class DataInitializer implements CommandLineRunner {
                                     .toString()
                                     .split("-"))
                             .reduce((s, s2) -> s2)
-                            .orElse(null), "https://www.google.com",statisticsRepository.findAll().get(0));
+                            .orElse(null), "https://www.google.com", statisticsRepository.findAll().get(0));
             ShortenUrlDto shortenUrlDto2 = new ShortenUrlDto(null,
                     Arrays.stream(UUID.nameUUIDFromBytes("https://www.bing.com".getBytes())
                                     .toString()
@@ -93,14 +92,14 @@ public class DataInitializer implements CommandLineRunner {
             shortenUrlRepository.saveAll(list);
         }
 
-        String originalUrl = "http://www.example.com";
+        String originalUrl = "https://www.example.com";
         String retrieveUrl = "https://github.com";
         String customAlias = "example";
 
         Mono<String> shortenUrl = ShortenUrlClientApi.shortenUrl(originalUrl, customAlias);
         Mono<String> retrievedUrl = ShortenUrlClientApi.retrieveUrl(retrieveUrl);
 
-        shortenUrl.subscribe(item-> System.out.println("Shortened Url: " + item));
-        retrievedUrl.subscribe(item-> System.out.println("Retrieve Url: " + item));
+        shortenUrl.subscribe(item -> System.out.println("Shortened Url: " + item));
+        retrievedUrl.subscribe(item -> System.out.println("Retrieve Url: " + item));
     }
 }
