@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "fb95128f-4aee-40db-b640-79d48c98cba6",
+		"name": "url-shortener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28804030"
+	},
+	"item": [
+		{
+			"name": "create url without custom alias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shorten/create?url=https://anyurlhere.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shorten",
+						"create"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://anyurlhere.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create url with custom alias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shorten/create?url=https://anyurlhere.com&customAlias=MyNewSite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shorten",
+						"create"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://anyurlhere.com"
+						},
+						{
+							"key": "customAlias",
+							"value": "MyNewSite"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "retrieve url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/retrieve?url=https://anyurlhere.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"retrieve"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://anyurlhere.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "retrieve most used urls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/retrieve/mostUsedUrls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"retrieve",
+						"mostUsedUrls"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
